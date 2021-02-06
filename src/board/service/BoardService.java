@@ -30,7 +30,7 @@ public class BoardService {
     }
 
 
-    public int getBoardInsert(BoardVo vo) {
+    public boolean getBoardInsert(BoardVo vo) {
         BoardDao dao = BoardDao.getInstance();
         Connection con = getConnection();
         dao.setConnection(con);
@@ -41,6 +41,6 @@ public class BoardService {
             rollback(con);
         }
         close(con);
-        return count;
+        return count > 0 ? true : false;
     }
 }

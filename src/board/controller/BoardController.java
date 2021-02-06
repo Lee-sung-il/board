@@ -1,11 +1,11 @@
 package board.controller;
 
+import board.action.DetailAction;
 import board.action.ListAction;
 import board.action.WriteAction;
 import board.action.WriteProcAction;
 import common.Action;
 import common.ActionForward;
-import member.action.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
