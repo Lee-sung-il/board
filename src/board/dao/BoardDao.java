@@ -22,7 +22,7 @@ public class BoardDao {
 		return LazyHolder.INSTANCE;
 	}
 
-	private static class LazyHolder {
+    private static class LazyHolder {
 		private static final BoardDao INSTANCE = new BoardDao();
 	}
 
@@ -163,6 +163,27 @@ public class BoardDao {
 			}
 		}
 		
+		return count;
+	}
+
+	public int deleteArticle(int sq) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			pstmt = con.prepareStatement
+					("delete from ki_board_tb where bd_sq=?");
+			pstmt.setInt(1, sq);
+			count = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				close(pstmt);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
 		return count;
 	}
 }

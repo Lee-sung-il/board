@@ -67,6 +67,17 @@ public class BoardService {
 		return count > 0 ? true : false;
 	}
 
+    public boolean deleteArticle(int sq) {
+		BoardDao dao = setDao();
+		int count = dao.deleteArticle(sq);
+		if (count > 0) {
+			commit(this.con);
+		} else {
+			rollback(this.con);
+		}
+		close(this.con);
+		return count > 0 ? true : false;
+    }
 }
 
 
