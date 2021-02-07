@@ -22,6 +22,8 @@ public class BoardDao {
 		return LazyHolder.INSTANCE;
 	}
 
+
+
     private static class LazyHolder {
 		private static final BoardDao INSTANCE = new BoardDao();
 	}
@@ -186,7 +188,30 @@ public class BoardDao {
 
 		return count;
 	}
+	public int updateArticle(BoardVo vo1) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			pstmt = con.prepareStatement
+					("update ki_board_tb set bd_sub = ? , bd_cntnt = ? where bd_sq=?");
+			pstmt.setString(1,vo1.getBd_sub());
+			pstmt.setString(2,vo1.getBd_cntnt());
+			pstmt.setInt(3, vo1.getBd_sq());
+			count = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				close(pstmt);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return count;
+	}
 }
+
 
 
 

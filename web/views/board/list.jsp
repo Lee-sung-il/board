@@ -119,7 +119,8 @@
 <a href="/board/list?pn=<%=i %>&sf=<%=sf %>&sk=<%=sk %>&sort=<%=sort %>"><%=i %></a>
 <%}%>
 <a href="/board/list?pn=<%=pi.getNextPageNumber()%>&sf=<%=sf %>&sk=<%=sk %>&sort=<%=sort %>">></a>
-
+<button onclick="location.href='/board/list?pn=1&sf=<%=sf %>&sk=<%=sk %>&sort=<%=sort %>'">첫페이지</button>
+<button onclick="location.href='/board/list?pn=<%=pi.getTotalArticleCount()%>&sf=<%=sf %>&sk=<%=sk %>&sort=<%=sort %>'">마지막페이지</button>
 <button onclick="location.href='/board/write?pn=<%=pn %>&sf=<%=sf %>&sk=<%=sk %>&sort=<%=sort %>'">글쓰기</button>
 </body>
 </html>

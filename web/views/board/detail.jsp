@@ -17,6 +17,12 @@
 <meta charset="UTF-8">
 <title>게시글 상세보기</title>
 	<script>
+		function modifyArticle() {
+			if (confirm("글을 수정하시겠습니까?")) {
+				location.href="/board/modify?pn=<%=pn %>&sf=<%=sf %>&sk=<%=sk %>&sort=<%=sort%>&sq=<%=vo.getBd_sq()%>";
+			}
+		}
+
 		function deleteArticle() {
 			if (confirm("글을 삭제하시겠습니까?")) {
 				location.href="/board/delete?pn=<%=pn %>&sf=<%=sf %>&sk=<%=sk %>&sort=<%=sort%>&sq=<%=vo.getBd_sq()%>";
@@ -45,7 +51,7 @@
 		조회수 : <%=vo.getBd_hit() %>
 	</div>
 	<%if (sq != null && vo.getBd_mber_sq() == Integer.parseInt(sq)) { %>
-	<button>수정</button>
+	<button onclick="modifyArticle()">수정</button>
 	<button onclick="deleteArticle()">삭제</button>
 	<%}%>
 	<button onclick="location.href='/board/list?pn=<%=pn %>&sf=<%=sf %>&sk=<%=sk %>&sort=<%=sort %>'">목록</button>

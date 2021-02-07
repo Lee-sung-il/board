@@ -78,6 +78,19 @@ public class BoardService {
 		close(this.con);
 		return count > 0 ? true : false;
     }
+
+    public boolean updateArticle(BoardVo vo1) {
+		BoardDao dao = setDao();
+		int count = dao.updateArticle(vo1);
+		if (count > 0) {
+			commit(this.con);
+		} else {
+			rollback(this.con);
+		}
+		close(this.con);
+		return count > 0 ? true : false;
+
+    }
 }
 
 
