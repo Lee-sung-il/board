@@ -79,9 +79,9 @@ public class BoardService {
 		return count > 0 ? true : false;
     }
 
-    public boolean updateArticle(BoardVo vo1) {
+    public boolean modifyArticle(BoardVo vo) {
 		BoardDao dao = setDao();
-		int count = dao.updateArticle(vo1);
+		int count = dao.modifyArticle(vo);
 		if (count > 0) {
 			commit(this.con);
 		} else {

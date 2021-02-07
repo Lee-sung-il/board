@@ -40,16 +40,11 @@ public class ModifyProcAction implements Action {
         String cntnt = request.getParameter("cntnt");
 //        페이지 번호, sf,sk,sort 는 null 검사 sq 빈값 ,null, 숫자, 0보다 큰지 검사
         RegExp re = new RegExp();
-        if(sub == null || sub.equals("") || !re.validateCheck(TYPE_SUB, sub)
-                || cntnt == null || cntnt.equals("")) {
-            response.setContentType("text/html;charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            out.println("<script>alert('잘못된 접근');history.back();</script>");
-            out.close();
-            return null;
-        }
-        if (pn == null || sf == null || sk == null || sort == null ||
-                bd_sq == null || bd_sq.equals("") || !re.validateCheck(TYPE_NUMBER, bd_sq) || Integer.parseInt(bd_sq) < 1)
+        if (pn == null || sf == null || sk == null || sort == null
+                || bd_sq == null || bd_sq.equals("") ||
+                !re.validateCheck(TYPE_NUMBER, bd_sq) || Integer.parseInt(bd_sq) < 1 ||
+        sub == null || sub.equals("") || !re.validateCheck(TYPE_SUB, sub)
+                || cntnt == null || cntnt.equals(""))
         {
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
@@ -78,11 +73,11 @@ public class ModifyProcAction implements Action {
         }
 
         BoardVo vo1 = new BoardVo();
-        vo1.setBd_sq(vo.getBd_sq());
+        vo1.setBd_sq(Integer.parseInt(bd_sq));
         vo1.setBd_sub(sub);
         vo1.setBd_cntnt(cntnt);
 
-        boolean isSuccess = svc.updateArticle(vo1);
+        boolean isSuccess = svc.modifyArticle(vo1);
         if (!isSuccess) {
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
