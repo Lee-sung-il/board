@@ -1,5 +1,6 @@
 package board.action;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,15 +32,51 @@ public class DetailAction implements Action {
 		
 		// sq에 해당하는 글 정보 로드
 		BoardService svc = new BoardService();
-		
-		boolean isSuccess = svc.increseArticleHitCount(Integer.parseInt(sq));
-		if (!isSuccess) {
-			response.setContentType("text/html;charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>alert('조회수 수정에 실패하였습니다.');history.back()';</script>");
-			out.close();
-			return null;
+
+//		쿠키 조회 후 조회수 업데이트 여부 결정
+
+		boolean isGet = false; // 쿠키 존재 여부 확인 변수
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			String  value = null;  //쿠키를 저장할 변수
+			 for (Cookie c : cookies) {
+			 	// sq 쿠키가 있는 경우
+				 if (c.getName().equals("board")) {
+//				 	쿠키 값 저장하여 분해 뒤 sq가 존재하는지 확인
+				 	value = c.getValue();
+				 	String  valueArray[] = value.split("-");
+				 	for (int i = 0; i <valueArray.length; i ++) {
+				 		if (valueArray[i].equals(sq)){
+							isGet = true;
+						}
+					}
+				 }
+			 }
+//			 sq 쿠키가 없는 경우
+			 if (!isGet) {
+				 boolean isSuccess = svc.increseArticleHitCount(Integer.parseInt(sq));
+				 if (!isSuccess) {
+					 response.setContentType("text/html;charset=UTF-8");
+					 PrintWriter out = response.getWriter();
+					 out.println("<script>alert('조회수 수정에 실패하였습니다.');history.back()';</script>");
+					 out.close();
+					 return null;
+				 }
+//				 쿠키 데이터 저장(key,value)
+				 Cookie c1 = null;
+//				 쿠키값 없을 경우
+				 if (value == null) {// 쿠키값 없을 경우
+				 	c1 = new Cookie("board",sq);
+				 }else { // 쿠키값 있을 경우
+				 	c1 = new Cookie("board",value + "-" + sq);
+				 }
+//				 쿠키 만료 기간 설정 (60sec * 60min * 24hour * 365day)
+				 c1.setMaxAge(60 * 60 * 24 * 365);
+				 response.addCookie(c1);
+			 }
 		}
+		
+
 		
 		
 		BoardVo vo = svc.getArticleDetail(Integer.parseInt(sq));

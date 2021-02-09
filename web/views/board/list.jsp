@@ -114,13 +114,13 @@
 	</tr>
 	<%} %>
 </table>
-<a href="/board/list?pn=<%=pi.getPrePageNumber() %>&sf=<%=sf %>&sk=<%=sk %>&sort=<%=sort %>"><</a>
+<a href="/board/list?pn=1&sf=<%=sf %>&sk=<%=sk %>&sort=<%=sort %>'">처음</a>
+<a href="/board/list?pn=<%=pi.getPrePageNumber() %>&sf=<%=sf %>&sk=<%=sk %>&sort=<%=sort %>">이전</a>
 <%for (int i = pi.getStartPageNumber(); i <= pi.getEndPageNumber(); i++) {%>
 <a href="/board/list?pn=<%=i %>&sf=<%=sf %>&sk=<%=sk %>&sort=<%=sort %>"><%=i %></a>
 <%}%>
-<a href="/board/list?pn=<%=pi.getNextPageNumber()%>&sf=<%=sf %>&sk=<%=sk %>&sort=<%=sort %>">></a>
-<button onclick="location.href='/board/list?pn=1&sf=<%=sf %>&sk=<%=sk %>&sort=<%=sort %>'">첫페이지</button>
-<button onclick="location.href='/board/list?pn=<%=pi.getTotalArticleCount()%>&sf=<%=sf %>&sk=<%=sk %>&sort=<%=sort %>'">마지막페이지</button>
+<a href="/board/list?pn=<%=pi.getNextPageNumber()%>&sf=<%=sf %>&sk=<%=sk %>&sort=<%=sort %>">다음</a>
+<a href="/board/list?pn=<%=pi.getEndPageNumber()%>&sf=<%=sf %>&sk=<%=sk %>&sort=<%=sort %>">마지막</a>
 <button onclick="location.href='/board/write?pn=<%=pn %>&sf=<%=sf %>&sk=<%=sk %>&sort=<%=sort %>'">글쓰기</button>
 </body>
 </html>
